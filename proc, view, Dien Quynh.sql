@@ -2,7 +2,7 @@
 MaSC char(5) references SuatChieu(MaSC), NgayChieu date)
 
 -- Chưa insert dữ liệu cho LICHCHIEU vì liên quan đến dữ liệu các bảng khác, lúc nào Mạnh tổng hợp thì insert nhé
--- Thủ tục xem thông tin những phim chiếu trong ngày 
+-- Thủ tục xem thông tin những phim chiếu trong ngày chỉ định 
 CREATE PROC sp_PhimTrongNgay @NgayChieu date 
 AS 
 BEGIN 
@@ -27,3 +27,10 @@ BEGIN
 	ELSE 
 		INSERT INTO LICHCHIEU VALUES(@maphim,@maphong,@masc,@ngaychieu)
 END
+-- View in ra danh sách KH hủy vé
+create view DS_HuyVe
+as
+select KHACHHANG.makh, tenkh, mave, malv, masc, trangthai
+from KHACHHANG, Ve
+where KHACHHANG.makh = Ve.makh and trangthai = 'Huy'
+select * from DS_HuyVe
